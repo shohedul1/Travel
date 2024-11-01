@@ -47,7 +47,7 @@ const App = () => {
         <Route path="/" element={<Layout authUser={authUser} logout={logout} />}>
           <Route index element={<Home />} />
           <Route path="/admin" element={authUser ? <Admin /> : <Navigate to="/login" replace />} />
-          <Route path='/login' element={<Login register={register} loading={loading} login={login} />} />
+          <Route path='/login' element={<Login register={register} loading={loading} login={login} authUser={authUser} />} />
           {/* Uncomment and define these components when needed */}
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/profile/:id" element={<Profile />} />

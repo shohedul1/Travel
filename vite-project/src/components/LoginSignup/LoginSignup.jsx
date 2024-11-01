@@ -28,6 +28,8 @@ const LoginSignup = ({ register, loading, login }) => {
 
 
 
+
+
     const navigate = useNavigate();
 
 
@@ -75,14 +77,15 @@ const LoginSignup = ({ register, loading, login }) => {
         Object.keys(signupData).forEach(key => {
             formData.append(key, signupData[key]);
         });
-        register(formData); // Ensure this sends FormData, not just an object
-        navigate("/");
+        register(formData);
+        // Ensure this sends FormData, not just an object
         setSignupData(initailSignupValue);
 
-        // setTimeout(() => {
-        //     window.location.reload();
-
-        // }, 2000);
+        setTimeout(() => {
+            navigate("/")
+            window.location.reload();
+        }, 2000);
+        ;
     };
 
 

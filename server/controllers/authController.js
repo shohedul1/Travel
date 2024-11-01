@@ -5,19 +5,30 @@ import response from "../config/responceHandler.js";
 
 
 
-
 export const registerUser = async (req, res) => {
     try {
         const { username, email, password, gender } = req.body;
         const file = req.file;
+
+        console.log('Uploaded file:', file); // Debugging line
+
+        if (!file) {
+            return res.status(400).json({ message: 'Profile picture is required' });
+        }
+
+        // Ensure the correct URL from Cloudinary is used
+        const profilePicture = file.path || file.secure_url;
+        
+        console.log('Profile picture URL:', profilePicture); // Debugging line
+
         // Check if the user already exists
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return response(res, 400, 'User with this email already exists');
         }
 
+        // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
-        const profilePicture = file ? file.path : null;
 
         // Create new user
         const newUser = new User({
@@ -28,8 +39,8 @@ export const registerUser = async (req, res) => {
             profilePicture,
         });
 
+        // Generate token and set cookie
         const accessToken = generateToken(newUser);
-        // Set auth token in cookies
         res.cookie("auth_token", accessToken, {
             httpOnly: true,
             sameSite: "none",
@@ -40,10 +51,11 @@ export const registerUser = async (req, res) => {
         return response(res, 201, 'User created successfully', newUser);
 
     } catch (error) {
-        console.log('Error creating user:', error);
+        console.error('Error creating user:', error);
         return response(res, 500, 'Internal server error', error.message);
     }
 };
+
 
 
 

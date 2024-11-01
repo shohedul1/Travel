@@ -1,7 +1,7 @@
 import express from 'express';
 import { checkUserAuth, getAllUser, loginUser, logout, registerUser } from '../controllers/authController.js';
-import upload from '../config/cloudinary.js';
 import { authMiddleware } from '../authMiddleware/authMiddleware.js';
+import upload from '../config/cloudinary.js';
 const router = express.Router();
 
 
