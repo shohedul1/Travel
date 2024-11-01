@@ -26,8 +26,10 @@ app.use('/users', postRoute)
 
 
 // start the server
-const PORT = process.env.PORT || 5001
+
+const PORT = process.env.PORT || 5001; // Changed to 5001
+
 app.listen(PORT, () => {
-    console.log(`server is running ${PORT}`)
+    console.log(`Server is running on port ${PORT}`);
     connectDB();
-})
+});

@@ -81,11 +81,7 @@ const LoginSignup = ({ register, loading, login }) => {
         // Ensure this sends FormData, not just an object
         setSignupData(initailSignupValue);
 
-        setTimeout(() => {
-            navigate("/")
-            window.location.reload();
-        }, 2000);
-        ;
+        
     };
 
 

@@ -21,7 +21,7 @@ console.log(
 )
 
 const storage = new CloudinaryStorage({
-    cloudinary,
+    cloudinary: cloudinary,
     params: {
         folder: 'profile_pictures', // Customize as needed
         allowedFormats: ['jpg', 'jpeg', 'png'],
