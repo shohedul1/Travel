@@ -8,9 +8,8 @@ import response from "../config/responceHandler.js";
 
 export const registerUser = async (req, res) => {
     try {
-        const { username, email, password, gender, dateOfBirth } = req.body;
+        const { username, email, password, gender } = req.body;
         const file = req.file;
-
         // Check if the user already exists
         const existingUser = await User.findOne({ email });
         if (existingUser) {
@@ -26,8 +25,15 @@ export const registerUser = async (req, res) => {
             email,
             password: hashedPassword,
             gender,
-            dateOfBirth,
             profilePicture,
+        });
+
+        const accessToken = generateToken(newUser);
+        // Set auth token in cookies
+        res.cookie("auth_token", accessToken, {
+            httpOnly: true,
+            sameSite: "none",
+            secure: true,
         });
 
         await newUser.save();

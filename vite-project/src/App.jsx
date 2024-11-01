@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Layout from './pages/Layout';
 import Home from './pages/Home';
@@ -11,6 +11,12 @@ import Admin from './pages/Admin';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Login from './pages/Login';
+import { Toaster } from "react-hot-toast";
+import { userAuthStore } from './store/useAuthStore';
+import Profile from './pages/Profile';
+import BokingTraver from './pages/BokingTraver';
+
+
 
 const App = () => {
   React.useEffect(() => {
@@ -22,20 +28,42 @@ const App = () => {
     });
     AOS.refresh();
   }, []);
+
+  const { checkAuth, loading, authUser, logout, register, login } = userAuthStore();
+
+
+  useEffect(() => {
+    if (!loading) {
+      checkAuth();
+    } else {
+      return <p>loading...</p>
+    }
+
+  }, [])
+
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="/admin" element={false ? <Admin /> : <Navigate to="/login" replace />} />
-        <Route path='/login' element={<Login />} />
-        {/* Uncomment and define these components when needed */}
-        <Route path="/blogs" element={<Blogs />} />
-        <Route path="/blogs/:id" element={<BlogsDetails />} />
-        <Route path="/best-places" element={<PlacesRoute />} />
-        <Route path="/about" element={<About />} />
-        <Route path="*" element={<NoPage />} />
-      </Route>
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<Layout authUser={authUser} logout={logout} />}>
+          <Route index element={<Home />} />
+          <Route path="/admin" element={authUser ? <Admin /> : <Navigate to="/login" replace />} />
+          <Route path='/login' element={<Login register={register} loading={loading} login={login} />} />
+          {/* Uncomment and define these components when needed */}
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/bokingTraver/:id" element={<BokingTraver />} />
+          <Route path="/blogs/:id" element={<BlogsDetails />} />
+          <Route path="/best-places" element={<PlacesRoute />} />
+          <Route path="/about" element={<About />} />
+          <Route path="*" element={<NoPage />} />
+        </Route>
+      </Routes>
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
+    </>
+
   );
 };
 

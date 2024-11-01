@@ -1,13 +1,30 @@
 import React, { useState } from "react";
 import { FaCaretDown, FaUserCircle } from "react-icons/fa";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { DropdownLinks, NavbarLinks } from "./Navbar";
 
-const ResponsiveMenu = ({ showMenu, setShowMenu }) => {
+
+const ResponsiveMenu = ({ showMenu, setShowMenu, authUser, logout }) => {
     const [toggleIs, setToggleIs] = useState(false);
+    const navigate = useNavigate();
+
 
     const handleMouseEnter = () => setToggleIs(true);
     const handleMouseLeave = () => setToggleIs(false);
+
+    const image = authUser && authUser.data ? authUser.data.profilePicture : null;
+    const Name = authUser && authUser.data ? authUser.data.username : null;
+
+
+    const handleLogout = () => {
+        logout();
+        setShowMenu(false);
+        setTimeout(() => {
+            window.location.reload()
+        }, 2000);
+    }
+
+
 
     return (
         <div
@@ -15,13 +32,42 @@ const ResponsiveMenu = ({ showMenu, setShowMenu }) => {
                 } fixed bottom-0 top-0 z-20 flex h-screen w-[75%] flex-col justify-between bg-white dark:bg-gray-900 dark:text-white px-8 pb-6 pt-16 text-black transition-all duration-200 md:hidden rounded-r-xl shadow-md`}
         >
             <div className="card">
-                <div className="flex items-center justify-start gap-3">
-                    <FaUserCircle size={50} />
-                    <div>
-                        <h1>Hello User</h1>
-                        <h1 className="text-sm text-slate-500">Premium user</h1>
-                    </div>
-                </div>
+                {
+                    authUser ? (
+                        <div className="flex items-center justify-start gap-3">
+                            {image ? (
+
+                                <button
+                                    onClick={() => {
+                                        navigate(`/profile/${authUser.data._id}`);
+                                        setShowMenu(false)
+                                    }}
+                                >
+                                    <img src={image} alt="Profile" className="w-10 h-10 rounded-full" />
+                                </button>
+                            ) : (
+                                <FaUserCircle size={40} />
+                            )}
+
+                            <div>
+                                <h1>{Name}</h1>
+
+                                <h1 className="text-sm text-slate-500">Premium user</h1>
+                            </div>
+
+                        </div>
+                    ) : (
+                        <button
+                            onClick={() => {
+                                navigate("/login")
+                                setShowMenu(false)
+                            }}
+                            className="bg-gradient-to-r from-primary to-secondary hover:bg-bg-gradient-to-r hover:from-secondary hover:bg-primary transition-all duration-600 text-white px-3 py-1 rounded-full"
+                        >
+                            Signup
+                        </button>
+                    )
+                }
                 <nav className="mt-12">
                     <ul className="space-y-4 text-xl">
                         {NavbarLinks.map((data, index) => (
@@ -70,12 +116,21 @@ const ResponsiveMenu = ({ showMenu, setShowMenu }) => {
                     </ul>
                 </nav>
             </div>
-            <div className="footer">
+            <div className="footer flex flex-col">
+                {
+                    authUser && (
+                        <div className="pb-4">
+                            <button onClick={handleLogout} className="text-left px-4 dark:bg-gray-50 dark:text-black bg-black text-white py-2 transition-all duration-200 scale-105  rounded-full ">
+                                Logout
+                            </button>
+                        </div>
+                    )
+                }
                 <h1>
                     Made with ❤ by <a href="https://dilshad-ahmed.github.io/">Dilshad</a>
                 </h1>
             </div>
-        </div>
+        </div >
     );
 };
 

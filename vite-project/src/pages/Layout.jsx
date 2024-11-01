@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Footer/Footer';
 import OrderPopup from '../components/OrderPopup/OrderPopup';
 
-const Layout = () => {
+const Layout = ({ logout, authUser }) => {
     const [orderPopup, setOrderPopup] = React.useState(false);
 
     const handleOrderPopup = () => {
@@ -14,7 +14,7 @@ const Layout = () => {
 
     return (
         <>
-            <Navbar handleOrderPopup={handleOrderPopup} />
+            <Navbar handleOrderPopup={handleOrderPopup} authUser={authUser} logout={logout} />
             <div>
                 <Outlet />
             </div>
