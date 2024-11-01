@@ -19,7 +19,7 @@ import BokingTraver from './pages/BokingTraver';
 
 
 const App = () => {
-  React.useEffect(() => {
+  useEffect(() => {
     AOS.init({
       offset: 100,
       duration: 900,

@@ -1,4 +1,4 @@
-import React, {useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { BiPlus, BiSolidHide } from "react-icons/bi";
 import { BiShow } from "react-icons/bi";
 import Loader from '../Loader/Loader';
@@ -76,13 +76,13 @@ const LoginSignup = ({ register, loading, login }) => {
             formData.append(key, signupData[key]);
         });
         register(formData); // Ensure this sends FormData, not just an object
+        navigate("/");
         setSignupData(initailSignupValue);
 
-        setTimeout(() => {
-            navigate("/");
-            window.location.reload();
+        // setTimeout(() => {
+        //     window.location.reload();
 
-        }, 2000);
+        // }, 2000);
     };
 
 
