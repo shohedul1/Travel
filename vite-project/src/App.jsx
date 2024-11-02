@@ -19,6 +19,7 @@ import PostTravel from './pages/PostTravel';
 import AdminLoyout from './pages/AdminLoyout';
 import BookingTravel from './pages/BookingTravel';
 import ShowingTraver from './pages/ShowingTraver';
+import EditTravelPost from './pages/EditTravelPost';
 
 
 
@@ -52,9 +53,10 @@ const App = () => {
           <Route index element={<Home />} />
           <Route path="/admin" element={authUser ? <AdminLoyout /> : <Navigate to="/login" replace />}>
             <Route index element={<Admin />} />
-            <Route path="postTravel" element={<PostTravel />} />
-            <Route path="bookingTravel" element={<BookingTravel />} />
-            <Route path="showingTraver" element={<ShowingTraver />} />
+            <Route path="/admin/postTravel" element={<PostTravel />} />
+            <Route path="/admin/bookingTravel" element={<BookingTravel />} />
+            <Route path="/admin/showingTraver" element={<ShowingTraver />} />
+            <Route path="/admin/:id" element={<EditTravelPost />} />
           </Route>
 
           <Route path='/login' element={<Login register={register} loading={loading} login={login} authUser={authUser} />} />

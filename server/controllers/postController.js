@@ -8,8 +8,13 @@ export const createPost = async (req, res) => {
         const { carname, location, description, price, date } = req.body;
 
         const file = req.file;
+        if (!file) {
+            return res.status(400).json({ message: 'Profile picture is required' });
+        }
 
-        const image = file ? file.path : null;
+        const image = file.path || file.secure_url;
+
+        // const image = file ? file.path : null;
 
         // Create a new post
         const newPost = new Post({

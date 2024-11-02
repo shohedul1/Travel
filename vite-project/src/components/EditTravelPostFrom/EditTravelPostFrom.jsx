@@ -1,23 +1,21 @@
-import React, { useRef, useState } from 'react'
-import { BiPlus } from 'react-icons/bi';
-import { userPostStore } from '../../store/userPostStore';
+
+
+import React, { useState } from 'react'
 // import { useNavigate } from 'react-router-dom';
 
 const initailPostTravelValue = {
-    carname: "",
-    location: "",
-    description: "",
+    carname: "jahas",
+    location: "bangladesh",
+    description: "descasfjdlkasj asdklfjaslf sdfj lasd asflkasdf",
     image: null,
-    price: "",
-    date: "",
+    price: '5545',
+    date: "20-20-24",
 }
 
-const PostTravelForm = () => {
-    const { travelPost } = userPostStore();
+const EditTravelPostFrom = () => {
+
 
     const [postTraverForm, setPostTraverForm] = useState(initailPostTravelValue);
-    const fileInputRef = useRef(null);
-
 
 
     // const navigate = useNavigate();
@@ -36,11 +34,11 @@ const PostTravelForm = () => {
 
     const handlePostTravelSubmit = (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        Object.keys(postTraverForm).forEach(key => {
-            formData.append(key, postTraverForm[key]);
-        });
-        travelPost(formData);
+        // const formData = new FormData();
+        // Object.keys(signupData).forEach(key => {
+        //     formData.append(key, signupData[key]);
+        // });
+        // register(formData);
         // Ensure this sends FormData, not just an object
         // setSignupData(initailSignupValue);
         console.log('postTraverForm', postTraverForm);
@@ -49,42 +47,12 @@ const PostTravelForm = () => {
 
     };
 
-
-    const handleImageRemove = () => {
-        setPostTraverForm({ ...postTraverForm, image: null });
-    };
     return (
         <form onSubmit={handlePostTravelSubmit}>
             <div className='flex flex-col gap-3'>
                 <div className='w-full flex-col flex '>
-                    <div>
-                        <input
-                            ref={fileInputRef}
-                            required
-                            type="file"
-                            name='image'
-                            onChange={handlePostTravelChange}
-                            accept="image/*"
-                            className='hidden'
-                        />
-                    </div>
-                    {postTraverForm.image ? (
-                        <button
-                            onClick={handleImageRemove}
-                        >
-                            <img
-                                src={URL.createObjectURL(postTraverForm.image)}
-                                alt="Profile"
-                                className="w-12 h-12 rounded-full"
-                            />
-                        </button>
-                    ) : (
-                        <BiPlus
-                            className="h-12 w-12 bg-white dark:bg-black rounded-full text-gray-400 dark:text-white mb-2 cursor-pointer"
-                            onClick={() => fileInputRef.current?.click()}
-                        />
-                    )}
-                    {/* <input onChange={handlePostTravelChange} name='iamge' className='p-2 rounded-md outline-none ' type="file" placeholder='Enter your name' /> */}
+                    <h1>profile photo</h1>
+                    <input onChange={handlePostTravelChange} name='iamge' className='p-2 rounded-md outline-none ' type="file" placeholder='Enter your name' />
                 </div>
                 <div className='w-full flex-col flex '>
                     <h1>Name</h1>
@@ -150,4 +118,4 @@ const PostTravelForm = () => {
     )
 }
 
-export default PostTravelForm
+export default EditTravelPostFrom
