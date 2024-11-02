@@ -20,6 +20,7 @@ import AdminLoyout from './pages/AdminLoyout';
 import BookingTravel from './pages/BookingTravel';
 import ShowingTraver from './pages/ShowingTraver';
 import EditTravelPost from './pages/EditTravelPost';
+import Loader from './components/Loader/Loader';
 
 
 
@@ -37,39 +38,49 @@ const App = () => {
   const { checkAuth, loading, authUser, logout, register, login } = userAuthStore();
 
 
+
   useEffect(() => {
     if (!loading) {
       checkAuth();
-    } else {
-      return <p>loading...</p>
     }
+  }, []);
 
-  }, [])
+  // console.log('getAllPost', getAllPost)
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Layout authUser={authUser} logout={logout} />}>
-          <Route index element={<Home />} />
-          <Route path="/admin" element={authUser ? <AdminLoyout /> : <Navigate to="/login" replace />}>
-            <Route index element={<Admin />} />
-            <Route path="/admin/postTravel" element={<PostTravel />} />
-            <Route path="/admin/bookingTravel" element={<BookingTravel />} />
-            <Route path="/admin/showingTraver" element={<ShowingTraver />} />
-            <Route path="/admin/:id" element={<EditTravelPost />} />
-          </Route>
+      {
+        loading ? (
 
-          <Route path='/login' element={<Login register={register} loading={loading} login={login} authUser={authUser} />} />
-          {/* Uncomment and define these components when needed */}
-          <Route path="/blogs" element={<Blogs />} />
-          <Route path="/profile/:id" element={<Profile />} />
-          <Route path="/bokingTraver/:id" element={<BokingTraver />} />
-          <Route path="/blogs/:id" element={<BlogsDetails />} />
-          <Route path="/best-places" element={<PlacesRoute />} />
-          <Route path="/about" element={<About />} />
-          <Route path="*" element={<NoPage />} />
-        </Route>
-      </Routes>
+          <div className='flex h-screen w-screen items-center justify-center'>
+            <Loader width="200" height="200" />
+          </div>
+        ) : (
+          <Routes>
+            <Route path="/" element={<Layout authUser={authUser} logout={logout} />}>
+              <Route index element={<Home />} />
+              <Route path="/admin" element={authUser ? <AdminLoyout /> : <Navigate to="/login" replace />}>
+                <Route index element={<Admin />} />
+                <Route path="/admin/postTravel" element={<PostTravel />} />
+                <Route path="/admin/bookingTravel" element={<BookingTravel />} />
+                <Route path="/admin/showingTraver" element={<ShowingTraver />} />
+                <Route path="/admin/:id" element={<EditTravelPost />} />
+              </Route>
+
+              <Route path='/login' element={<Login register={register} loading={loading} login={login} authUser={authUser} />} />
+              {/* Uncomment and define these components when needed */}
+              <Route path="/blogs" element={<Blogs />} />
+              <Route path="/profile/:id" element={<Profile />} />
+              <Route path="/bokingTraver/:id" element={<BokingTraver />} />
+              <Route path="/blogs/:id" element={<BlogsDetails />} />
+              <Route path="/best-places" element={<PlacesRoute />} />
+              <Route path="/about" element={<About />} />
+              <Route path="*" element={<NoPage />} />
+            </Route>
+          </Routes>
+
+        )
+      }
       <Toaster
         position="top-center"
         reverseOrder={false}

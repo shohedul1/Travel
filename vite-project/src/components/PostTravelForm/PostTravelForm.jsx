@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { BiPlus } from 'react-icons/bi';
 import { userPostStore } from '../../store/userPostStore';
+import Loader from '../Loader/Loader';
 // import { useNavigate } from 'react-router-dom';
 
 const initailPostTravelValue = {
@@ -13,7 +14,8 @@ const initailPostTravelValue = {
 }
 
 const PostTravelForm = () => {
-    const { travelPost } = userPostStore();
+    const { travelPost, loading } = userPostStore();
+
 
     const [postTraverForm, setPostTraverForm] = useState(initailPostTravelValue);
     const fileInputRef = useRef(null);
@@ -40,10 +42,11 @@ const PostTravelForm = () => {
         Object.keys(postTraverForm).forEach(key => {
             formData.append(key, postTraverForm[key]);
         });
-        travelPost(formData);
-        // Ensure this sends FormData, not just an object
-        // setSignupData(initailSignupValue);
-        console.log('postTraverForm', postTraverForm);
+
+        if (formData) {
+            travelPost(formData);
+        }
+
         setPostTraverForm(initailPostTravelValue);
 
 
@@ -84,12 +87,12 @@ const PostTravelForm = () => {
                             onClick={() => fileInputRef.current?.click()}
                         />
                     )}
-                    {/* <input onChange={handlePostTravelChange} name='iamge' className='p-2 rounded-md outline-none ' type="file" placeholder='Enter your name' /> */}
                 </div>
                 <div className='w-full flex-col flex '>
                     <h1>Name</h1>
                     <input
                         name='carname'
+                        required
                         type="text"
                         value={postTraverForm.carname}
                         onChange={handlePostTravelChange}
@@ -101,6 +104,7 @@ const PostTravelForm = () => {
                     <h1>Location</h1>
                     <input
                         name='location'
+                        required
                         type="text"
                         value={postTraverForm.location}
                         onChange={handlePostTravelChange}
@@ -111,6 +115,7 @@ const PostTravelForm = () => {
                     <h1>description</h1>
                     <textarea
                         name='description'
+                        required
                         type="text"
                         value={postTraverForm.description}
                         onChange={handlePostTravelChange}
@@ -122,6 +127,7 @@ const PostTravelForm = () => {
                     <h1>Price</h1>
                     <input
                         name='price'
+                        required
                         type="number"
                         value={postTraverForm.price}
                         onChange={handlePostTravelChange}
@@ -133,6 +139,7 @@ const PostTravelForm = () => {
                     <h1>Date</h1>
                     <input
                         name='date'
+                        required
                         type="date"
                         value={postTraverForm.date}
                         onChange={handlePostTravelChange}
@@ -141,8 +148,10 @@ const PostTravelForm = () => {
                     />
                 </div>
 
-                <div className='w-full flex-col flex bg-black text-white py-4 mt-5 rounded-full '>
-                    <button>Submit</button>
+                <div className='w-full flex-col items-center flex bg-black text-white py-4 mt-5 rounded-full '>
+                    <button type='submit'>
+                        {loading ? <Loader width={"40"} height={'40'} /> : "Submit"}
+                    </button>
                 </div>
             </div>
 

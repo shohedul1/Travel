@@ -164,7 +164,7 @@ const LoginSignup = ({ register, loading, login }) => {
                             </div>
                             <div className='flex items-center justify-center transition-all duration-2000 hover:scale-110'>
                                 <button type='submit' className='px-12 py-2 bg-[#d0ffc9] dark:bg-black text-black  text-xl dark:text-white rounded-full'>
-                                    {loading ? <Loader /> : "Signup"}
+                                    {loading ? <Loader width={"40"} height={'40'} /> : "Signup"}
                                 </button>
                             </div>
 
@@ -280,7 +280,7 @@ const LoginSignup = ({ register, loading, login }) => {
 
                             <div className='flex items-center justify-center transition-all duration-2000 hover:scale-110'>
                                 <button type='submit' className='px-12 py-2 bg-[#d0ffc9] dark:bg-black text-black  text-xl dark:text-white rounded-full'>
-                                    {loading ? <Loader /> : "Signup"}
+                                    {loading ? <Loader width={"40"} height={'40'} /> : "Signup"}
 
                                 </button>
                             </div>

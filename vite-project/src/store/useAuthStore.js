@@ -60,7 +60,7 @@ export const userAuthStore = create((set) => ({
             const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/check-auth`, {
                 withCredentials: true,
             });
-            console.log('Response data:', res.data); // Debug log
+            // console.log('Response data:', res.data); // Debug log
             set({ authUser: res.data });
         } catch (error) {
             console.error('Error:', error);
