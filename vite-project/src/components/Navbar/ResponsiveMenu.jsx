@@ -74,7 +74,12 @@ const ResponsiveMenu = ({ showMenu, setShowMenu, authUser, logout }) => {
                             <li key={index}>
                                 <NavLink
                                     to={data.link}
-                                    onClick={() => setShowMenu(false)}
+                                    onClick={() => {
+                                        setShowMenu(false);
+                                        window.scrollTo({ top: 0, behavior: "smooth" })
+                                    }}
+
+
                                     className={({ isActive }) =>
                                         isActive
                                             ? "text-primary font-bold mb-1 inline-block"

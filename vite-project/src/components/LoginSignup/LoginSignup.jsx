@@ -27,9 +27,6 @@ const LoginSignup = ({ register, loading, login }) => {
     const fileInputRef = useRef(null);
 
 
-
-
-
     const navigate = useNavigate();
 
 

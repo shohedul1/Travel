@@ -15,6 +15,10 @@ import { Toaster } from "react-hot-toast";
 import { userAuthStore } from './store/useAuthStore';
 import Profile from './pages/Profile';
 import BokingTraver from './pages/BokingTraver';
+import PostTravel from './pages/PostTravel';
+import AdminLoyout from './pages/AdminLoyout';
+import BookingTravel from './pages/BookingTravel';
+import ShowingTraver from './pages/ShowingTraver';
 
 
 
@@ -46,7 +50,13 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout authUser={authUser} logout={logout} />}>
           <Route index element={<Home />} />
-          <Route path="/admin" element={authUser ? <Admin /> : <Navigate to="/login" replace />} />
+          <Route path="/admin" element={authUser ? <AdminLoyout /> : <Navigate to="/login" replace />}>
+            <Route index element={<Admin />} />
+            <Route path="postTravel" element={<PostTravel />} />
+            <Route path="bookingTravel" element={<BookingTravel />} />
+            <Route path="showingTraver" element={<ShowingTraver />} />
+          </Route>
+
           <Route path='/login' element={<Login register={register} loading={loading} login={login} authUser={authUser} />} />
           {/* Uncomment and define these components when needed */}
           <Route path="/blogs" element={<Blogs />} />
