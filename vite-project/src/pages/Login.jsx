@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import LoginSignup from '../components/LoginSignup/LoginSignup'
 import { useNavigate } from 'react-router-dom';
 
-const Login = ({ register, loading, login,authUser }) => {
+const Login = ({ register, loginLoader, registerLoader, login, authUser }) => {
     const navigate = useNavigate();
     // Ensure authUser and authUser.data exist before accessing gender
     // console.log('authUser', authUser)
@@ -16,7 +16,7 @@ const Login = ({ register, loading, login,authUser }) => {
 
     return (
         <div>
-            <LoginSignup register={register} loading={loading} login={login} />
+            <LoginSignup register={register} registerLoader={registerLoader} login={login} loginLoader={loginLoader} />
         </div>
     )
 }

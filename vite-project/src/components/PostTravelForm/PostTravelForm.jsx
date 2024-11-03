@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { BiPlus } from 'react-icons/bi';
 import { userPostStore } from '../../store/userPostStore';
 import Loader from '../Loader/Loader';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const initailPostTravelValue = {
     carname: "",
@@ -22,7 +22,7 @@ const PostTravelForm = () => {
 
 
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
 
 
@@ -36,21 +36,28 @@ const PostTravelForm = () => {
 
 
 
-    const handlePostTravelSubmit = (e) => {
+
+    const handlePostTravelSubmit = async (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        Object.keys(postTraverForm).forEach(key => {
-            formData.append(key, postTraverForm[key]);
-        });
+        try {
+            const formData = new FormData();
+            Object.keys(postTraverForm).forEach(key => {
+                formData.append(key, postTraverForm[key]);
+            });
 
-        if (formData) {
-            travelPost({ postData: formData });
+            const response = await travelPost({ postData: formData });
+            console.log('response', response)
+
+            if (response && response.status === 201) {
+                setPostTraverForm(initailPostTravelValue);
+                navigate('/admin/showingTraver', { replace: true });
+            }
+        } catch (error) {
+            console.error(error);
         }
-
-        setPostTraverForm(initailPostTravelValue);
-
-
     };
+
+
 
 
     const handleImageRemove = () => {

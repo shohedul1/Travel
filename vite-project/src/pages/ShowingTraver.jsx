@@ -1,19 +1,22 @@
+
 import { useEffect } from "react";
-import { userPostStore } from "../store/userPostStore";
 import ShowingTraverCard from "../components/ShowingTraverCard/ShowingTraverCard";
+import { userPostStore } from "../store/userPostStore";
 
 const ShowingTraver = () => {
-  const { getAllPostTravel, getAllPost } = userPostStore();
+
+  const { getAllPostTravel, getAllPost, } = userPostStore();
+  const Data = getAllPost?.data || [];
 
   useEffect(() => {
     getAllPostTravel();
-  }, []);
+  }, [getAllPostTravel]);
+  // const travelPosts = Array.isArray(Data) ? Data : [];
 
-  const existingData = getAllPost?.data || [];
 
   return (
     <div>
-      {existingData.length === 0 ? (
+      {Data.length === 0 ? (
         <div className="w-full h-full pt-40 flex items-center justify-center">
           <h1 className="text-[#e2a5a5] text-4xl font-bold">Post not found</h1>
         </div>
@@ -24,7 +27,7 @@ const ShowingTraver = () => {
               All Travel Post
             </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {existingData.map((item, index) => (
+              {Data.map((item, index) => (
                 <ShowingTraverCard
                   key={item._id || index} // Use a unique key if available
                   item={item}

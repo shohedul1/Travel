@@ -20,8 +20,6 @@ import AdminLoyout from './pages/AdminLoyout';
 import BookingTravel from './pages/BookingTravel';
 import ShowingTraver from './pages/ShowingTraver';
 import EditTravelPost from './pages/EditTravelPost';
-import Loader from './components/Loader/Loader';
-
 
 
 const App = () => {
@@ -35,12 +33,12 @@ const App = () => {
     AOS.refresh();
   }, []);
 
-  const { checkAuth, loading, authUser, logout, register, login } = userAuthStore();
+  const { checkAuth, checkAuthLoader, loginLoader, registerLoader, authUser, logout, register, login } = userAuthStore();
 
 
 
   useEffect(() => {
-    if (!loading) {
+    if (!checkAuthLoader) {
       checkAuth();
     }
   }, []);
@@ -49,37 +47,31 @@ const App = () => {
 
   return (
     <>
-      {
-        loading ? (
 
-          <div className='flex h-screen w-screen items-center justify-center'>
-            <Loader width="200" height="200" />
-          </div>
-        ) : (
-          <Routes>
-            <Route path="/" element={<Layout authUser={authUser} logout={logout} />}>
-              <Route index element={<Home />} />
-              <Route path="/admin" element={authUser ? <AdminLoyout /> : <Navigate to="/login" replace />}>
-                <Route index element={<Admin />} />
-                <Route path="/admin/postTravel" element={<PostTravel />} />
-                <Route path="/admin/bookingTravel" element={<BookingTravel />} />
-                <Route path="/admin/showingTraver" element={<ShowingTraver />} />
-                <Route path="/admin/:postId" element={<EditTravelPost />} />
-              </Route>
+      <Routes>
+        <Route path="/" element={<Layout authUser={authUser} logout={logout} />}>
+          <Route index element={<Home />} />
+          <Route path="/admin" element={authUser ? <AdminLoyout /> : <Navigate to="/login" replace />}>
+            <Route index element={<Admin />} />
+            <Route path="/admin/postTravel" element={<PostTravel />} />
+            <Route path="/admin/bookingTravel" element={<BookingTravel />} />
+            <Route path="/admin/showingTraver" element={<ShowingTraver />} />
+            <Route path="/admin/:postId" element={<EditTravelPost />} />
+          </Route>
 
-              <Route path='/login' element={<Login register={register} loading={loading} login={login} authUser={authUser} />} />
-              {/* Uncomment and define these components when needed */}
-              <Route path="/blogs" element={<Blogs />} />
-              <Route path="/profile/:id" element={<Profile />} />
-              <Route path="/bokingTraver/:id" element={<BokingTraver />} />
-              <Route path="/blogs/:id" element={<BlogsDetails />} />
-              <Route path="/best-places" element={<PlacesRoute />} />
-              <Route path="/about" element={<About />} />
-              <Route path="*" element={<NoPage />} />
-            </Route>
-          </Routes>
-        )
-      }
+          <Route path='/login' element={<Login register={register} loginLoader={loginLoader} registerLoader={registerLoader} login={login} authUser={authUser} />} />
+          {/* Uncomment and define these components when needed */}
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/profile/:userId" element={<Profile />} />
+          <Route path="/bokingTraver/:id" element={<BokingTraver />} />
+          <Route path="/blogs/:id" element={<BlogsDetails />} />
+          <Route path="/best-places" element={<PlacesRoute />} />
+          <Route path="/about" element={<About />} />
+          <Route path="*" element={<NoPage />} />
+        </Route>
+      </Routes>
+      )
+
       <Toaster
         position="top-center"
         reverseOrder={false}

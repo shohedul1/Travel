@@ -19,7 +19,7 @@ const initailSignupValue = {
 
 
 
-const LoginSignup = ({ register, loading, login }) => {
+const LoginSignup = ({ register, loginLoader, registerLoader, login }) => {
     const [loginToggle, setLoginToggle] = useState(true);
     const [showPassword, setShowPassword] = useState(true);
     const [loginData, setLoginData] = useState(initailLoginValue);
@@ -84,10 +84,6 @@ const LoginSignup = ({ register, loading, login }) => {
 
 
 
-
-
-
-
     return (
         <div className="h-full w-full flex justify-center items-center overflow-hidden py-32">
             <div className="bg-gray-300 dark:bg-gray-400 h-full rounded-md w-[400px] mx-5 p-5 ">
@@ -123,6 +119,7 @@ const LoginSignup = ({ register, loading, login }) => {
                                 <input
                                     type="email"
                                     name='email'
+                                    autoComplete='email'
                                     value={loginData.email}
                                     onChange={handleLoginChange}
                                     required
@@ -140,6 +137,7 @@ const LoginSignup = ({ register, loading, login }) => {
                                         name='password'
                                         value={loginData.password}
                                         onChange={handleLoginChange}
+                                        autoComplete="current-password"
                                         required
                                         placeholder="enter your password..."
                                         className="p-2 rounded-md outline-none focus:border-red-200 border placeholder:text-white w-full pr-10 bg-[#cec2c2] dark:bg-[#f5ecec]"
@@ -164,7 +162,7 @@ const LoginSignup = ({ register, loading, login }) => {
                             </div>
                             <div className='flex items-center justify-center transition-all duration-2000 hover:scale-110'>
                                 <button type='submit' className='px-12 py-2 bg-[#d0ffc9] dark:bg-black text-black  text-xl dark:text-white rounded-full'>
-                                    {loading ? <Loader width={"40"} height={'40'} /> : "Signup"}
+                                    {loginLoader ? <Loader width={"40"} height={'40'} /> : "Signup"}
                                 </button>
                             </div>
 
@@ -210,6 +208,7 @@ const LoginSignup = ({ register, loading, login }) => {
                                     type="text"
                                     name='username'
                                     value={signupData.username}
+                                    autoComplete="username"
                                     onChange={handleSignupChange}
                                     required
                                     placeholder="enter your name..."
@@ -224,6 +223,7 @@ const LoginSignup = ({ register, loading, login }) => {
                                 <input
                                     type="email"
                                     name='email'
+                                    autoComplete='email'
                                     onChange={handleSignupChange}
                                     required
                                     value={signupData.email}
@@ -240,6 +240,7 @@ const LoginSignup = ({ register, loading, login }) => {
                                         type={showPassword ? "password" : "text"}
                                         name='password'
                                         value={signupData.password}
+                                        autoComplete="current-password"
                                         onChange={handleSignupChange}
                                         required
                                         placeholder="enter your password..."
@@ -280,7 +281,7 @@ const LoginSignup = ({ register, loading, login }) => {
 
                             <div className='flex items-center justify-center transition-all duration-2000 hover:scale-110'>
                                 <button type='submit' className='px-12 py-2 bg-[#d0ffc9] dark:bg-black text-black  text-xl dark:text-white rounded-full'>
-                                    {loading ? <Loader width={"40"} height={'40'} /> : "Signup"}
+                                    {registerLoader ? <Loader width={"40"} height={'40'} /> : "Signup"}
 
                                 </button>
                             </div>

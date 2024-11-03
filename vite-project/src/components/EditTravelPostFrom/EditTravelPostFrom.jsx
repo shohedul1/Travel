@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { userPostStore } from "../../store/userPostStore";
 import { BiPlus } from "react-icons/bi";
+import Loader from "../Loader/Loader";
 
 const initialPostTravelValue = {
     carname: "",
@@ -14,10 +15,10 @@ const initialPostTravelValue = {
 
 const EditTravelPostForm = () => {
     const { postId } = useParams();
-    const { getSinglePostTravel, getSinglePost, upDatePostTravel, postLoader } = userPostStore();
+    const { getSinglePostTravel, getSinglePost, upDatePostTravel, upDatePostTravelLoader } = userPostStore();
     const [postTravelForm, setPostTravelForm] = useState(initialPostTravelValue);
     const fileInputRef = useRef(null);
-    const Navigate = useNavigate();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (postId) {
@@ -53,19 +54,27 @@ const EditTravelPostForm = () => {
         }));
     };
 
-    const handlePostTravelSubmit = (e) => {
+    const handlePostTravelSubmit = async (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
-        Object.keys(postTravelForm).forEach(key => {
-            formData.append(key, postTravelForm[key]);
-        });
+        try {
+            const formData = new FormData();
+            Object.keys(postTravelForm).forEach(key => {
+                formData.append(key, postTravelForm[key]);
+            });
 
-        if (formData) {
-            upDatePostTravel({ postData: formData, postId });
+            const response = await upDatePostTravel({ postData: formData, postId: postId });
+            console.log('response', response)
+            if (response && response.status === 200) {
+                setPostTravelForm(initialPostTravelValue);
+                navigate('/admin/showingTraver', { replace: true });
+            }
+
+        } catch (error) {
+            console.log(error);
         }
-        Navigate("/admin/showingTraver")
-        // console.log('postTravelForm', postTravelForm);
+
+
     };
 
     const handleImageRemove = () => {
@@ -154,9 +163,9 @@ const EditTravelPostForm = () => {
                         className='p-2 rounded-md outline-none'
                     />
                 </div>
-                <div className='w-full flex-col flex bg-black text-white py-4 mt-5 rounded-full'>
+                <div className='w-full flex-col items-center flex bg-black text-white py-4 mt-5 rounded-full'>
                     <button type="submit">
-                        {postLoader ? "loading.." : "Submit"}
+                        {upDatePostTravelLoader ? <Loader width={'40'} height={'40'} /> : "Submit"}
                     </button>
                 </div>
             </div>

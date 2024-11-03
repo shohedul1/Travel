@@ -109,6 +109,21 @@ export const getAllPosts = async (req, res) => {
     }
 }
 
+//get Recent Post
+export const getRecentPost = async (req, res) => {
+    try {
+        const posts = await Post.find()
+            .sort({ createdAt: -1 })
+            .limit(3)
+            .populate('user', '_id username profilePicture email')
+
+        return response(res, 201, 'Get all posts successfully', posts)
+    } catch (error) {
+        console.log('error getting posts', error)
+        return response(res, 500, 'Internal server error', error.message)
+    }
+}
+
 
 // Get a single post by its ID
 export const getPostById = async (req, res) => {
