@@ -14,7 +14,7 @@ const initailPostTravelValue = {
 }
 
 const PostTravelForm = () => {
-    const { travelPost, loading } = userPostStore();
+    const { travelPost, postLoader } = userPostStore();
 
 
     const [postTraverForm, setPostTraverForm] = useState(initailPostTravelValue);
@@ -44,7 +44,7 @@ const PostTravelForm = () => {
         });
 
         if (formData) {
-            travelPost(formData);
+            travelPost({ postData: formData });
         }
 
         setPostTraverForm(initailPostTravelValue);
@@ -150,7 +150,7 @@ const PostTravelForm = () => {
 
                 <div className='w-full flex-col items-center flex bg-black text-white py-4 mt-5 rounded-full '>
                     <button type='submit'>
-                        {loading ? <Loader width={"40"} height={'40'} /> : "Submit"}
+                        {postLoader ? <Loader width={"40"} height={'40'} /> : "Submit"}
                     </button>
                 </div>
             </div>

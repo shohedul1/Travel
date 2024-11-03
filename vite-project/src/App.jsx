@@ -64,7 +64,7 @@ const App = () => {
                 <Route path="/admin/postTravel" element={<PostTravel />} />
                 <Route path="/admin/bookingTravel" element={<BookingTravel />} />
                 <Route path="/admin/showingTraver" element={<ShowingTraver />} />
-                <Route path="/admin/:id" element={<EditTravelPost />} />
+                <Route path="/admin/:postId" element={<EditTravelPost />} />
               </Route>
 
               <Route path='/login' element={<Login register={register} loading={loading} login={login} authUser={authUser} />} />
@@ -78,7 +78,6 @@ const App = () => {
               <Route path="*" element={<NoPage />} />
             </Route>
           </Routes>
-
         )
       }
       <Toaster

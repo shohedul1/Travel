@@ -2,14 +2,13 @@ import { create } from 'zustand';
 import axios from "axios"
 import toast from 'react-hot-toast';
 
-
-
 export const userAuthStore = create((set) => ({
     getallUser: null,
     authUser: null,
     loading: false,
+    userUpDateLoader: false,
 
-    register: async (signupData) => {
+    register: async ({ signupData }) => {
         try {
             set({ loading: true });
             const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/register`, signupData, {
@@ -24,7 +23,7 @@ export const userAuthStore = create((set) => ({
         }
     },
 
-    login: async (loginData) => {
+    login: async ({ loginData }) => {
         try {
             set({ loading: true });
             const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/login`, loginData, {
@@ -68,6 +67,21 @@ export const userAuthStore = create((set) => ({
             set({ loading: false });
         }
     },
+    userUpDate: async ({ userId, upData }) => {
+        try {
+            set({ userUpDateLoader: true });
+            const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/auth/userUpdate/${userId}`, upData, {
+                withCredentials: true,
+            });
+            // console.log('Response data:', res.data); // Debug log
+            set({ authUser: res.data });
+        } catch (error) {
+            console.error('Error:', error);
+        } finally {
+            set({ userUpDateLoader: false });
+        }
+    },
+
 
 }))
 

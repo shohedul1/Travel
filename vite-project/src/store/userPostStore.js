@@ -5,12 +5,13 @@ import { create } from "zustand";
 export const userPostStore = create((set) => ({
     getAllPost: null,
     getSinglePost: null,
-    loading: false,
+    postLoader: false,
     deleteLoader: false,
+    singleLoader: false,
 
-    travelPost: async (postData) => {
+    travelPost: async ({ postData }) => {
         try {
-            set({ loading: true });
+            set({ postLoader: true });
             const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/users/posts`, postData, {
                 withCredentials: true,
             });
@@ -19,7 +20,7 @@ export const userPostStore = create((set) => ({
         } catch (error) {
             toast.error(error.response.data.message || "Something went wrong");
         } finally {
-            set({ loading: false });
+            set({ postLoader: false });
         }
     },
 
@@ -29,7 +30,7 @@ export const userPostStore = create((set) => ({
             const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/posts`, {
                 withCredentials: true,
             });
-            console.log('Response data:', res.data); // Debug log
+            // console.log('Response data:', res.data); // Debug log
             set({ getAllPost: res.data });
         } catch (error) {
             console.error('Error:', error);
@@ -37,8 +38,34 @@ export const userPostStore = create((set) => ({
             set({ loading: false });
         }
     },
-
-
+    getSinglePostTravel: async ({ postId }) => {
+        try {
+            set({ singleLoader: true });
+            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/posts/user/${postId}`, {
+                withCredentials: true,
+            });
+            // console.log('Response data:', res.data); // Debug log
+            set({ getSinglePost: res.data });
+        } catch (error) {
+            console.error('Error:', error);
+        } finally {
+            set({ singleLoader: false });
+        }
+    },
+    upDatePostTravel: async ({ postData, postId }) => {
+        try {
+            set({ postLoader: true });
+            const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/users/posts/user/${postId}`, postData, {
+                withCredentials: true,
+            });
+            // console.log(res.data.message)
+            toast.success(res.data.message);
+        } catch (error) {
+            toast.error(error.response.data.message || "Something went wrong");
+        } finally {
+            set({ postLoader: false });
+        }
+    },
     travelPostDelete: async ({ postId }) => {
         try {
             set({ deleteLoader: true });

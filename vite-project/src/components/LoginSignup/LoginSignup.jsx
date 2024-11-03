@@ -44,7 +44,7 @@ const LoginSignup = ({ register, loading, login }) => {
     //login
     const handleLoginsubmit = async (e) => {
         e.preventDefault();
-        login(loginData);
+        login({ loginData: loginData });
         setLoginData(initailLoginValue);
 
         setTimeout(() => {
@@ -74,7 +74,7 @@ const LoginSignup = ({ register, loading, login }) => {
         Object.keys(signupData).forEach(key => {
             formData.append(key, signupData[key]);
         });
-        register(formData);
+        register({ signupData: formData });
         // Ensure this sends FormData, not just an object
         setSignupData(initailSignupValue);
 

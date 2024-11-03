@@ -41,11 +41,13 @@ export const updateCreatePost = async (req, res) => {
     try {
         const { postId } = req.params;  // Post ID from route parameters
         const userId = req.user.userId;
+        // console.log(userId);
 
         const { carname, location, description, price, date } = req.body;
         const file = req.file;
 
-        const image = file ? file.path : null;
+        // Safely check if file exists before accessing properties
+        const image = file ? file.path || file.secure_url : null;
 
         // Find and update the post
         const updatedPost = await Post.findByIdAndUpdate(
@@ -57,8 +59,7 @@ export const updateCreatePost = async (req, res) => {
                 description,
                 price,
                 date,
-                image
-                // ...(image && { image }), // Only update image if a new file is uploaded
+                ...(image && { image }), // Only update image if a new file is uploaded
             },
             { new: true } // Return the updated document
         );
@@ -73,6 +74,7 @@ export const updateCreatePost = async (req, res) => {
         return response(res, 500, 'Internal server error', error.message);
     }
 };
+
 
 // Delete a post by its ID
 export const deleteCreatePost = async (req, res) => {
