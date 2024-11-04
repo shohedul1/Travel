@@ -3,7 +3,8 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoute from "./routes/authRoute.js";
-import postRoute from "./routes/postRoute.js"
+import postRoute from "./routes/postRoute.js";
+import applyRoute from "./routes/applyRoute.js"
 import connectDB from './config/connectDB.js';
 
 dotenv.config();
@@ -21,7 +22,9 @@ app.use(cors(corsOptions));
 
 //api route
 app.use('/auth', authRoute);
-app.use('/users', postRoute)
+app.use('/users', postRoute);
+app.use('/apply', applyRoute)
+
 
 
 

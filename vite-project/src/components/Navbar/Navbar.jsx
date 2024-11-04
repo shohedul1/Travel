@@ -165,10 +165,8 @@ const Navbar = ({ logout, authUser }) => {
                                 </button>
                                 <button
                                   onClick={() => (
-                                    navigate("/bokingTraver/545456")
+                                    navigate("/clienBookingTravel")
                                   )}
-
-
                                   className='px-2 py-1 hover:bg-red-100 dark:bg-red-200 rounded-full '>
                                   Boking Travel
                                 </button>
@@ -206,7 +204,7 @@ const Navbar = ({ logout, authUser }) => {
                                 </button>
                                 <button
                                   onClick={() => (
-                                    navigate("/bokingTraver/545456")
+                                    navigate("/clienBookingTravel")
                                   )}
 
 

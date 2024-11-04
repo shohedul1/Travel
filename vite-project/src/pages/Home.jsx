@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import OrderPopup from '../components/OrderPopup/OrderPopup';
 import NatureVid from "../assets/video/main.mp4";
 import Hero from '../components/Hero/Hero';
@@ -16,6 +16,13 @@ import { userPostStore } from '../store/userPostStore';
 const Home = () => {
   const { getAllPostTravel, getAllPost, getRecentPostTravel, getRecentPost } = userPostStore();
   const Data = getAllPost?.data || [];
+  const [orderPopup, setOrderPopup] = useState(false);
+  const [selectedId, setSelectedId] = useState(null); // New state for storing selected ID
+
+  const handleOrderPopup = (id) => {
+    setSelectedId(id); // Set the selected ID
+    setOrderPopup(!orderPopup);
+  };
 
   // console.log('getRecentPost', getRecentPost)
   const RecentData = getRecentPost?.data || [];
@@ -28,11 +35,8 @@ const Home = () => {
     getRecentPostTravel();
   }, [getAllPostTravel, getRecentPostTravel]);
 
-  const [orderPopup, setOrderPopup] = React.useState(false);
 
-  const handleOrderPopup = () => {
-    setOrderPopup(!orderPopup);
-  };
+
   return (
     <>
       <div>
@@ -53,7 +57,7 @@ const Home = () => {
         <Banner />
         <BannerPic img={Banner2} />
         <Testimonial />
-        <OrderPopup orderPopup={orderPopup} setOrderPopup={setOrderPopup} />
+        <OrderPopup orderPopup={orderPopup} setOrderPopup={setOrderPopup} selectedId={selectedId} />
       </div>
     </>
   )

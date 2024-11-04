@@ -21,7 +21,7 @@ const Places = ({ handleOrderPopup, Data }) => {
               <PlaceCard
                 handleOrderPopup={handleOrderPopup}
                 key={index}
-                {...item}
+                item={item}
               />
             ))}
           </div>

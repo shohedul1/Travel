@@ -14,12 +14,12 @@ import Login from './pages/Login';
 import { Toaster } from "react-hot-toast";
 import { userAuthStore } from './store/useAuthStore';
 import Profile from './pages/Profile';
-import BokingTraver from './pages/BokingTraver';
 import PostTravel from './pages/PostTravel';
 import AdminLoyout from './pages/AdminLoyout';
-import BookingTravel from './pages/BookingTravel';
 import ShowingTraver from './pages/ShowingTraver';
 import EditTravelPost from './pages/EditTravelPost';
+import BookingTravel from './pages/BookingTravel';
+import ClienBookingTravel from './pages/ClienBookingTravel';
 
 
 const App = () => {
@@ -63,7 +63,7 @@ const App = () => {
           {/* Uncomment and define these components when needed */}
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/profile/:userId" element={<Profile />} />
-          <Route path="/bokingTraver/:id" element={<BokingTraver />} />
+          <Route path="/clienBookingTravel" element={<ClienBookingTravel />} />
           <Route path="/blogs/:id" element={<BlogsDetails />} />
           <Route path="/best-places" element={<PlacesRoute />} />
           <Route path="/about" element={<About />} />
